@@ -10,19 +10,25 @@ Including:
 
 2. An example system is:
    $$
-   \begin{matrix}
-   x_{k+1}^1 \\\\
-   x_{k+1}^2
-   \end{matrix}
+   \left[
+   \begin{array}{c}
+      x_{k+1}^1 \\\\
+      x_{k+1}^2
+   \end{array}
+   \right]
    =
-   \begin{matrix}
-   1 & 1 \\\\
-   0 & 1
-   \end{matrix}
-   \begin{matrix}
+   \left[
+   \begin{array}{cc}
+      1 & 1 \\\\
+      0 & 1
+   \end{array}
+   \right]
+   \left[
+   \begin{array}{c}
    x_k^1 \\\\
    x_k^2
-   \end{matrix} + w
+   \end{array}
+   \right] + w
    $$
 
    $$
