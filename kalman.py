@@ -2,7 +2,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-# 首先针对离散的线性系统进行编程
 class DISCRETE_SYSTEM:
     def __init__(self, x_dim, u_dim, y_dim):
         self.state_dim = x_dim
@@ -66,21 +65,26 @@ class Kalman:
         
     
     def KalmanFilter_OneStep(self, x_post_0, u, z, P_post_0):       
-        # 计算先验状态
+        # Calculate prior estimated state
+        # 计算先验状态估计值
         pri_state = np.matmul(self.sys.A, x_post_0) + np.matmul(self.sys.B, u)
         
+        # Calculate prior error matrix 
         # 计算先验误差矩阵
         P_pri = np.matmul(np.matmul(self.sys.A, P_post_0), self.sys.A.T) + self.sys.Q 
         
-        # 计算Kalman Gain
+        # Calculate Kalman gain
+        # 计算卡尔曼增益
         num = np.matmul(P_pri, self.sys.H.T)
         den = np.matmul(self.sys.H, np.matmul(P_pri, self.sys.H.T)) + self.sys.R
         K = np.matmul(num, np.linalg.pinv(den))
 
-        # 后验估计
+        # posteriori estimated state
+        # 后验状态估计值
         x_post_1 = pri_state + np.matmul(K, (z - np.matmul(self.sys.H, pri_state)))
         
-        # 更新后延估计的协方差误差
+        # Update the posteriori estimated state error covariance matrix 
+        # 更新后验估计状态的误差协方差阵
         temp = np.ones(self.sys.state_dim) - np.matmul(K, self.sys.H)
         P_post_1 = np.matmul(temp, P_pri)
 
@@ -91,7 +95,8 @@ class Kalman:
 
 
 if __name__ == "__main__":
-    # 利用DR_CAN的匀速运动模型
+
+    # An example 
     A = np.array([[1,1],
                   [0,1]], dtype = np.float32)
     B = np.array([[0,0],
@@ -105,11 +110,10 @@ if __name__ == "__main__":
     system = DISCRETE_LINEAR_SYSTEM(2,2,2, A, B, C, D, H,Q,R)
     kal = Kalman(sys=system)
     
-    # 生成测试数据
+    # Generate testing data 
     x_list, z_list = system.GenetrateData(100)
     
-    
-    # 进行Kalman Filter
+    # Kalman Filter
     x_post = system.x.copy()
     P_post = np.eye(system.state_dim, dtype = np.float32)
     x_post_list = x_post.copy()
