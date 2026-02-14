@@ -10,10 +10,10 @@ Including:
 
 2. An example system is:
    $$
-   \begin{matrix}
+   \begin{bmatrix}
    x_{k+1}^1 \\
    x_{k+1}^2
-   \end{matrix}
+   \end{bmatrix}
    =
    \begin{bmatrix}
    1 & 1 \\
@@ -48,5 +48,6 @@ Including:
 ### 2026.02.14
 
 第一次提交，实现了一种基于离散线性系统的卡尔曼滤波器
+
 
 
